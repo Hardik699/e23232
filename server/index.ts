@@ -46,8 +46,8 @@ export function createServer() {
   app.get("/api/google-sheets/info-hr", getHRSpreadsheetInfo);
 
   // Load data from Google Sheets
-  app.get("/api/google-sheets/load-it", (await import("./services/googleSheets")).loadITFromGoogleSheets);
-  app.get("/api/google-sheets/load-hr", (await import("./services/googleSheets")).loadHRFromGoogleSheets);
+  app.get("/api/google-sheets/load-it", loadITFromGoogleSheets);
+  app.get("/api/google-sheets/load-hr", loadHRFromGoogleSheets);
 
   return app;
 }
