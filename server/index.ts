@@ -10,6 +10,8 @@ import {
   syncMasterDataToGoogleSheets,
   getHRSpreadsheetInfo,
   syncHRDataToGoogleSheets,
+  loadITFromGoogleSheets,
+  loadHRFromGoogleSheets,
 } from "./services/googleSheets";
 
 export function createServer() {
