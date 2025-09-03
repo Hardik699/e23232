@@ -35,6 +35,14 @@ import {
   Database,
   RefreshCw,
   ExternalLink,
+  Mouse as MouseIcon,
+  Keyboard as KeyboardIcon,
+  Cpu,
+  SquareStack,
+  BatteryCharging,
+  Headphones,
+  Camera as CameraIcon,
+  Phone,
 } from "lucide-react";
 import * as XLSX from "xlsx";
 
@@ -682,96 +690,96 @@ export default function MasterAdmin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="systemassets" className="w-full">
-              <TabsList className="w-full flex flex-wrap gap-2 overflow-x-auto bg-slate-800/70 mb-6 p-1 rounded-lg">
+              <TabsList className="w-full flex flex-wrap gap-2 overflow-x-auto bg-slate-800/60 backdrop-blur border border-slate-700/60 mb-6 p-1 rounded-xl shadow-sm">
                 <TabsTrigger
                   value="systemassets"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  All Assets
+                  <HardDrive className="h-3.5 w-3.5 mr-1.5" /> All Assets
                 </TabsTrigger>
                 <TabsTrigger
                   value="mouse"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Mouse
+                  <MouseIcon className="h-3.5 w-3.5 mr-1.5" /> Mouse
                 </TabsTrigger>
                 <TabsTrigger
                   value="keyboard"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Keyboard
+                  <KeyboardIcon className="h-3.5 w-3.5 mr-1.5" /> Keyboard
                 </TabsTrigger>
                 <TabsTrigger
                   value="motherboard"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Motherboard
+                  <Cpu className="h-3.5 w-3.5 mr-1.5" /> Motherboard
                 </TabsTrigger>
                 <TabsTrigger
                   value="ram"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  RAM
+                  <SquareStack className="h-3.5 w-3.5 mr-1.5" /> RAM
                 </TabsTrigger>
                 <TabsTrigger
                   value="storage"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Storage
+                  <HardDrive className="h-3.5 w-3.5 mr-1.5" /> Storage
                 </TabsTrigger>
                 <TabsTrigger
                   value="power-supply"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Power Supply
+                  <BatteryCharging className="h-3.5 w-3.5 mr-1.5" /> Power Supply
                 </TabsTrigger>
                 <TabsTrigger
                   value="headphone"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Headphone
+                  <Headphones className="h-3.5 w-3.5 mr-1.5" /> Headphone
                 </TabsTrigger>
                 <TabsTrigger
                   value="camera"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Camera
+                  <CameraIcon className="h-3.5 w-3.5 mr-1.5" /> Camera
                 </TabsTrigger>
                 <TabsTrigger
                   value="monitor"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Monitor
+                  <Monitor className="h-3.5 w-3.5 mr-1.5" /> Monitor
                 </TabsTrigger>
                 <TabsTrigger
                   value="vonage"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  Vonage
+                  <Phone className="h-3.5 w-3.5 mr-1.5" /> Vonage
                 </TabsTrigger>
                 <TabsTrigger
                   value="pclaptops"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  PC/Laptops
+                  <Monitor className="h-3.5 w-3.5 mr-1.5" /> PC/Laptops
                 </TabsTrigger>
                 <TabsTrigger
                   value="itaccounts"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  IT Accounts
+                  <Users className="h-3.5 w-3.5 mr-1.5" /> IT Accounts
                 </TabsTrigger>
                 <TabsTrigger
                   value="notifications"
-                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-500 data-[state=active]:text-white rounded-md px-3 py-1"
+                  className="text-xs whitespace-nowrap data-[state=active]:bg-blue-deep-600 data-[state=active]:text-white rounded-md px-3 py-1 transition-colors hover:bg-slate-700/60"
                 >
-                  IT Notifications
+                  <AlertCircle className="h-3.5 w-3.5 mr-1.5" /> IT Notifications
                 </TabsTrigger>
               </TabsList>
 
               {/* Employees Table */}
               <TabsContent value="employees">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -830,7 +838,7 @@ export default function MasterAdmin() {
 
               {/* Admin Users Table */}
               <TabsContent value="admin">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -877,7 +885,7 @@ export default function MasterAdmin() {
 
               {/* Departments Table */}
               <TabsContent value="departments">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -949,7 +957,7 @@ export default function MasterAdmin() {
                     </TabsList>
 
                     <TabsContent value="all">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1010,7 +1018,7 @@ export default function MasterAdmin() {
 
                     {/* Mouse */}
                     <TabsContent value="mouse">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1046,7 +1054,7 @@ export default function MasterAdmin() {
 
                     {/* Keyboard */}
                     <TabsContent value="keyboard">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1082,7 +1090,7 @@ export default function MasterAdmin() {
 
                     {/* Motherboard */}
                     <TabsContent value="motherboard">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1122,7 +1130,7 @@ export default function MasterAdmin() {
 
                     {/* RAM */}
                     <TabsContent value="ram">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1162,7 +1170,7 @@ export default function MasterAdmin() {
 
                     {/* Storage */}
                     <TabsContent value="storage">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1204,7 +1212,7 @@ export default function MasterAdmin() {
 
                     {/* Power Supply */}
                     <TabsContent value="power-supply">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1240,7 +1248,7 @@ export default function MasterAdmin() {
 
                     {/* Headphone */}
                     <TabsContent value="headphone">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1276,7 +1284,7 @@ export default function MasterAdmin() {
 
                     {/* Camera */}
                     <TabsContent value="camera">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1312,7 +1320,7 @@ export default function MasterAdmin() {
 
                     {/* Monitor */}
                     <TabsContent value="monitor">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1348,7 +1356,7 @@ export default function MasterAdmin() {
 
                     {/* Vonage */}
                     <TabsContent value="vonage">
-                      <div className="rounded-md border border-slate-700">
+                      <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                         <Table>
                           <TableHeader>
                             <TableRow>
@@ -1387,7 +1395,7 @@ export default function MasterAdmin() {
 
               {/* Mouse */}
               <TabsContent value="mouse">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1425,7 +1433,7 @@ export default function MasterAdmin() {
 
               {/* Keyboard */}
               <TabsContent value="keyboard">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1463,7 +1471,7 @@ export default function MasterAdmin() {
 
               {/* Motherboard */}
               <TabsContent value="motherboard">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1503,7 +1511,7 @@ export default function MasterAdmin() {
 
               {/* RAM */}
               <TabsContent value="ram">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1545,7 +1553,7 @@ export default function MasterAdmin() {
 
               {/* Storage */}
               <TabsContent value="storage">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1587,7 +1595,7 @@ export default function MasterAdmin() {
 
               {/* Power Supply */}
               <TabsContent value="power-supply">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1625,7 +1633,7 @@ export default function MasterAdmin() {
 
               {/* Headphone */}
               <TabsContent value="headphone">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1663,7 +1671,7 @@ export default function MasterAdmin() {
 
               {/* Camera */}
               <TabsContent value="camera">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1701,7 +1709,7 @@ export default function MasterAdmin() {
 
               {/* Monitor */}
               <TabsContent value="monitor">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1739,7 +1747,7 @@ export default function MasterAdmin() {
 
               {/* Vonage */}
               <TabsContent value="vonage">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1777,7 +1785,7 @@ export default function MasterAdmin() {
 
               {/* PC/Laptop Configurations Table */}
               <TabsContent value="pclaptops">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1836,7 +1844,7 @@ export default function MasterAdmin() {
 
               {/* IT Accounts Table */}
               <TabsContent value="itaccounts">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1896,7 +1904,7 @@ export default function MasterAdmin() {
 
               {/* Salary Records Table */}
               <TabsContent value="salaries">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1955,7 +1963,7 @@ export default function MasterAdmin() {
 
               {/* Leave Requests Table */}
               <TabsContent value="leaves">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -2010,7 +2018,7 @@ export default function MasterAdmin() {
 
               {/* Pending IT Notifications Table */}
               <TabsContent value="notifications">
-                <div className="rounded-md border border-slate-700">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
                   <Table>
                     <TableHeader>
                       <TableRow>
