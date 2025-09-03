@@ -489,6 +489,20 @@ export default function HRDashboard() {
     }
   };
 
+  // Handle document upload in edit form
+  const handleEditDocumentUpload =
+    (documentType: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const result = e.target?.result as string;
+          handleEditFormChange(documentType, result);
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+
   // Handle employee creation
   const handleCreateEmployee = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -3030,70 +3044,124 @@ Generated on: ${new Date().toLocaleString()}
               <CardContent className="p-6 space-y-8">
                 {/* Photo Upload Section (Edit Mode Only) */}
                 {employeeDetailModal.isEditing && (
-                  <div className="space-y-4">
-                    <div className="flex items-center space-x-2 border-b border-slate-700 pb-2">
-                      <Image className="h-5 w-5 text-purple-400" />
-                      <h3 className="text-lg font-semibold text-white">
-                        Employee Photo
-                      </h3>
-                    </div>
-                    <div className="flex items-center space-x-6">
-                      {/* Current/New Photo Display */}
-                      <div className="w-32 h-32 border-2 border-dashed border-slate-600 rounded-lg flex items-center justify-center bg-slate-800/30 overflow-hidden">
-                        {editPhotoPreview ||
-                        employeeDetailModal.employee.photo ? (
-                          <img
-                            src={
-                              editPhotoPreview ||
-                              employeeDetailModal.employee.photo
-                            }
-                            alt="Employee"
-                            className="w-full h-full object-cover rounded-lg"
-                          />
-                        ) : (
-                          <div className="text-center">
-                            <Image className="h-8 w-8 text-slate-500 mx-auto mb-2" />
-                            <p className="text-xs text-slate-500">No Photo</p>
-                          </div>
-                        )}
+                  <div className="space-y-8">
+                    <div>
+                      <div className="flex items-center space-x-2 border-b border-slate-700 pb-2">
+                        <Image className="h-5 w-5 text-purple-400" />
+                        <h3 className="text-lg font-semibold text-white">
+                          Employee Photo
+                        </h3>
                       </div>
-
-                      {/* Upload Buttons */}
-                      <div className="flex flex-col space-y-3">
-                        <div className="relative">
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleEditPhotoUpload}
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                          />
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
-                          >
-                            <Upload className="h-4 w-4 mr-2" />
-                            {employeeDetailModal.employee.photo
-                              ? "Change Photo"
-                              : "Add Photo"}
-                          </Button>
+                      <div className="flex items-center space-x-6 mt-4">
+                        {/* Current/New Photo Display */}
+                        <div className="w-32 h-32 border-2 border-dashed border-slate-600 rounded-lg flex items-center justify-center bg-slate-800/30 overflow-hidden">
+                          {editPhotoPreview || employeeDetailModal.employee.photo ? (
+                            <img
+                              src={editPhotoPreview || employeeDetailModal.employee.photo}
+                              alt="Employee"
+                              className="w-full h-full object-cover rounded-lg"
+                            />
+                          ) : (
+                            <div className="text-center">
+                              <Image className="h-8 w-8 text-slate-500 mx-auto mb-2" />
+                              <p className="text-xs text-slate-500">No Photo</p>
+                            </div>
+                          )}
                         </div>
 
-                        {(editPhotoPreview ||
-                          employeeDetailModal.employee.photo) && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            onClick={() => {
-                              setEditPhotoPreview("");
-                              handleEditFormChange("photo", "");
-                            }}
-                            className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
-                          >
-                            <Trash2 className="h-4 w-4 mr-2" />
-                            Remove Photo
-                          </Button>
-                        )}
+                        {/* Upload Buttons */}
+                        <div className="flex flex-col space-y-3">
+                          <div className="relative">
+                            <input
+                              type="file"
+                              accept="image/*"
+                              onChange={handleEditPhotoUpload}
+                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                            >
+                              <Upload className="h-4 w-4 mr-2" />
+                              {employeeDetailModal.employee.photo ? "Change Photo" : "Add Photo"}
+                            </Button>
+                          </div>
+
+                          {(editPhotoPreview || employeeDetailModal.employee.photo) && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => {
+                                setEditPhotoPreview("");
+                                handleEditFormChange("photo", "");
+                              }}
+                              className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                            >
+                              <Trash2 className="h-4 w-4 mr-2" />
+                              Remove Photo
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Document Uploads (Edit) */}
+                    <div className="space-y-6">
+                      <div className="flex items-center space-x-2 border-b border-slate-700 pb-2">
+                        <FileText className="h-5 w-5 text-blue-400" />
+                        <h3 className="text-lg font-semibold text-white">Update Documents</h3>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {documentTypes.map((docType) => {
+                          const IconComponent = docType.icon;
+                          const currentDoc = (employeeDetailModal.editForm as any)[docType.key] ?? (employeeDetailModal.employee as any)[docType.key];
+                          return (
+                            <div key={docType.key} className="p-4 rounded-lg border border-slate-700 bg-slate-800/30">
+                              <div className="flex items-center justify-between mb-3">
+                                <div className="flex items-center space-x-2">
+                                  <IconComponent className="h-4 w-4 text-slate-300" />
+                                  <span className="text-sm text-slate-200">{docType.label}</span>
+                                </div>
+                                <Badge className={`${currentDoc ? "bg-green-500/20 text-green-400" : "bg-slate-600/40 text-slate-300"}`}>{currentDoc ? "On File" : "Missing"}</Badge>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <div className="relative">
+                                  <input
+                                    type="file"
+                                    accept="image/*,.pdf,.doc,.docx"
+                                    onChange={handleEditDocumentUpload(docType.key)}
+                                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                  />
+                                  <Button size="sm" variant="outline" className={`border-slate-600 text-slate-300 ${currentDoc ? "border-green-500 text-green-400" : ""}`}>
+                                    <Upload className="h-3 w-3 mr-2" />
+                                    {currentDoc ? "Replace" : "Upload"}
+                                  </Button>
+                                </div>
+                                {currentDoc && (
+                                  <>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() => handleOpenDocumentPreview(currentDoc, docType.label, employeeDetailModal.employee.fullName)}
+                                      className="border-blue-600 text-blue-400"
+                                    >
+                                      <Image className="h-3 w-3 mr-2" /> Preview
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      onClick={() => handleEditFormChange(docType.key, "")}
+                                      className="border-red-600 text-red-400"
+                                    >
+                                      <Trash2 className="h-3 w-3 mr-2" /> Remove
+                                    </Button>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
