@@ -1,5 +1,3 @@
-import debounce from "lodash.debounce";
-
 export type MasterDataShape = {
   adminUsers?: unknown[];
   userCredentials?: Record<string, string>;
@@ -14,8 +12,32 @@ export type MasterDataShape = {
   pendingITNotifications?: unknown[];
 };
 
+function debounce<F extends (...args: any[]) => void>(
+  fn: F,
+  wait: number,
+  opts?: { maxWait?: number },
+): F {
+  let t: ReturnType<typeof setTimeout> | null = null;
+  let lastCall = 0;
+  return ((...args: any[]) => {
+    const now = Date.now();
+    if (opts?.maxWait && now - lastCall >= opts.maxWait) {
+      if (t) clearTimeout(t);
+      lastCall = now;
+      fn(...args);
+      return;
+    }
+    if (t) clearTimeout(t);
+    t = setTimeout(() => {
+      lastCall = Date.now();
+      fn(...args);
+    }, wait);
+  }) as F;
+}
+
 function collectMasterData(): MasterDataShape {
-  const get = (k: string, def: string) => JSON.parse(localStorage.getItem(k) || def);
+  const get = (k: string, def: string) =>
+    JSON.parse(localStorage.getItem(k) || def);
   return {
     adminUsers: get("users", "[]"),
     userCredentials: get("userCredentials", "{}"),
@@ -53,12 +75,10 @@ const debouncedSync = debounce(trySync, 1500, { maxWait: 5000 });
 
 export function setupAutoSync() {
   const origSet = localStorage.setItem.bind(localStorage);
-  // Avoid double-wrapping
   if ((window as any).__autoSyncPatched) return;
   (window as any).__autoSyncPatched = true;
   localStorage.setItem = function (key: string, value: string) {
     origSet(key, value);
-    // Only sync on known keys
     const watched = new Set([
       "users",
       "userCredentials",
@@ -77,7 +97,6 @@ export function setupAutoSync() {
 }
 
 export async function loadFromSheetsIfEmpty() {
-  // If any key has data, skip auto-load
   const keys = [
     "hrEmployees",
     "systemAssets",
@@ -102,21 +121,42 @@ export async function loadFromSheetsIfEmpty() {
   try {
     const it = await fetch("/api/google-sheets/load-it").then((r) => r.json());
     if (it?.success && it.data) {
-      if (it.data.systemAssets) localStorage.setItem("systemAssets", JSON.stringify(it.data.systemAssets));
-      if (it.data.pcLaptopAssets) localStorage.setItem("pcLaptopAssets", JSON.stringify(it.data.pcLaptopAssets));
-      if (it.data.itAccounts) localStorage.setItem("itAccounts", JSON.stringify(it.data.itAccounts));
-      if (it.data.pendingITNotifications) localStorage.setItem("pendingITNotifications", JSON.stringify(it.data.pendingITNotifications));
+      if (it.data.systemAssets)
+        localStorage.setItem(
+          "systemAssets",
+          JSON.stringify(it.data.systemAssets),
+        );
+      if (it.data.pcLaptopAssets)
+        localStorage.setItem(
+          "pcLaptopAssets",
+          JSON.stringify(it.data.pcLaptopAssets),
+        );
+      if (it.data.itAccounts)
+        localStorage.setItem("itAccounts", JSON.stringify(it.data.itAccounts));
+      if (it.data.pendingITNotifications)
+        localStorage.setItem(
+          "pendingITNotifications",
+          JSON.stringify(it.data.pendingITNotifications),
+        );
     }
   } catch {}
 
   try {
     const hr = await fetch("/api/google-sheets/load-hr").then((r) => r.json());
     if (hr?.success && hr.data) {
-      if (hr.data.employees) localStorage.setItem("hrEmployees", JSON.stringify(hr.data.employees));
-      if (hr.data.departments) localStorage.setItem("departments", JSON.stringify(hr.data.departments));
-      if (hr.data.leaveRequests) localStorage.setItem("leaveRequests", JSON.stringify(hr.data.leaveRequests));
-      if (hr.data.attendanceRecords) localStorage.setItem("attendanceRecords", JSON.stringify(hr.data.attendanceRecords));
-      if (hr.data.salaryRecords) localStorage.setItem("salaryRecords", JSON.stringify(hr.data.salaryRecords));
+      if (hr.data.employees)
+        localStorage.setItem("hrEmployees", JSON.stringify(hr.data.employees));
+      if (hr.data.departments)
+        localStorage.setItem("departments", JSON.stringify(hr.data.departments));
+      if (hr.data.leaveRequests)
+        localStorage.setItem("leaveRequests", JSON.stringify(hr.data.leaveRequests));
+      if (hr.data.attendanceRecords)
+        localStorage.setItem(
+          "attendanceRecords",
+          JSON.stringify(hr.data.attendanceRecords),
+        );
+      if (hr.data.salaryRecords)
+        localStorage.setItem("salaryRecords", JSON.stringify(hr.data.salaryRecords));
     }
   } catch {}
 }
