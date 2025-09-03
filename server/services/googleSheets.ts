@@ -68,6 +68,31 @@ async function writeTable(
   });
 }
 
+async function readTable(
+  sheets: any,
+  spreadsheetId: string,
+  title: string,
+) {
+  const resp = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${title}!A:ZZ`,
+    valueRenderOption: "UNFORMATTED_VALUE",
+  });
+  const values = resp.data.values || [];
+  if (values.length === 0) return [];
+  const headers = values[0] as string[];
+  const rows = values.slice(1).map((row: any[]) => {
+    const obj: Record<string, any> = {};
+    headers.forEach((h, i) => {
+      const key = String(h || "").trim();
+      if (!key) return;
+      obj[key] = row?.[i] ?? "";
+    });
+    return Object.values(obj).some((v) => v !== "") ? obj : null;
+  });
+  return rows.filter(Boolean);
+}
+
 // IT
 export const getSpreadsheetInfo: RequestHandler = async (_req, res) => {
   try {
@@ -287,5 +312,73 @@ export const syncHRDataToGoogleSheets: RequestHandler = async (req, res) => {
     res
       .status(500)
       .json({ success: false, error: e?.message || "HR sync failed" });
+  }
+};
+
+export const loadITFromGoogleSheets: RequestHandler = async (_req, res) => {
+  try {
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    if (!spreadsheetId)
+      return res
+        .status(400)
+        .json({ success: false, error: "GOOGLE_SHEET_ID not set" });
+
+    const sheets = await getSheetsClient();
+    const [systemAssets, pcLaptopAssets, itAccounts, pendingITNotifications] =
+      await Promise.all([
+        readTable(sheets, spreadsheetId, "System_Assets"),
+        readTable(sheets, spreadsheetId, "PC_Laptop_Configs"),
+        readTable(sheets, spreadsheetId, "IT_Accounts"),
+        readTable(sheets, spreadsheetId, "IT_Notifications"),
+      ]);
+
+    res.json({
+      success: true,
+      data: {
+        systemAssets,
+        pcLaptopAssets,
+        itAccounts,
+        pendingITNotifications,
+      },
+    });
+  } catch (e: any) {
+    res
+      .status(500)
+      .json({ success: false, error: e?.message || "Load IT failed" });
+  }
+};
+
+export const loadHRFromGoogleSheets: RequestHandler = async (_req, res) => {
+  try {
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID_HR;
+    if (!spreadsheetId)
+      return res
+        .status(400)
+        .json({ success: false, error: "GOOGLE_SHEET_ID_HR not set" });
+
+    const sheets = await getSheetsClient();
+    const [employees, departments, leaveRequests, attendanceRecords, salaryRecords] =
+      await Promise.all([
+        readTable(sheets, spreadsheetId, "Employees"),
+        readTable(sheets, spreadsheetId, "Departments"),
+        readTable(sheets, spreadsheetId, "Leave_Requests"),
+        readTable(sheets, spreadsheetId, "Attendance_Records"),
+        readTable(sheets, spreadsheetId, "Salary_Records"),
+      ]);
+
+    res.json({
+      success: true,
+      data: {
+        employees,
+        departments,
+        leaveRequests,
+        attendanceRecords,
+        salaryRecords,
+      },
+    });
+  } catch (e: any) {
+    res
+      .status(500)
+      .json({ success: false, error: e?.message || "Load HR failed" });
   }
 };
