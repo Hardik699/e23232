@@ -117,4 +117,14 @@
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.1);
   }
+
+  /* Hide first column for asset tables, allow opt-out */
+  .assets-hide-id table th:first-child,
+  .assets-hide-id table td:first-child {
+    display: none;
+  }
+  .assets-hide-id .keep-first-col table th:first-child,
+  .assets-hide-id .keep-first-col table td:first-child {
+    display: table-cell;
+  }
 }
