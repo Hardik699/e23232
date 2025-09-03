@@ -24,6 +24,9 @@ import { setupAutoSync, loadFromSheetsIfEmpty } from "@/lib/gsync";
 
 const queryClient = new QueryClient();
 
+setupAutoSync();
+loadFromSheetsIfEmpty();
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
