@@ -21,11 +21,23 @@ import PCLaptopInfo from "./pages/PCLaptopInfo";
 import DemoDataView from "./pages/DemoDataView";
 import MasterAdmin from "./pages/MasterAdmin";
 import { setupAutoSync, loadFromSheetsIfEmpty } from "@/lib/gsync";
+import { loadDemoData } from "@/lib/createDemoData";
+import { STORAGE_KEY } from "@/lib/systemAssets";
 
 const queryClient = new QueryClient();
 
 setupAutoSync();
-loadFromSheetsIfEmpty();
+loadFromSheetsIfEmpty().then(() => {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const assets = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(assets) || assets.length === 0) {
+      loadDemoData();
+    }
+  } catch {
+    loadDemoData();
+  }
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
