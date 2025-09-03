@@ -20,6 +20,7 @@ import SystemInfoDetail from "./pages/SystemInfoDetail";
 import PCLaptopInfo from "./pages/PCLaptopInfo";
 import DemoDataView from "./pages/DemoDataView";
 import MasterAdmin from "./pages/MasterAdmin";
+import { setupAutoSync, loadFromSheetsIfEmpty } from "@/lib/gsync";
 
 const queryClient = new QueryClient();
 
