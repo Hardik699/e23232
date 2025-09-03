@@ -3704,7 +3704,7 @@ Generated on: ${new Date().toLocaleString()}
                       Document Status
                     </h3>
                   </div>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {documentTypes.map((docType) => {
                       const hasDoc =
                         employeeDetailModal.employee[
@@ -3713,9 +3713,9 @@ Generated on: ${new Date().toLocaleString()}
                       return (
                         <div
                           key={docType.key}
-                          className="flex items-center justify-between p-3 bg-slate-800/30 rounded border border-slate-700"
+                          className="flex items-center justify-between p-3 bg-slate-800/30 rounded border border-slate-700 min-w-0"
                         >
-                          <span className="text-slate-300 text-sm">
+                          <span className="text-slate-300 text-sm truncate">
                             {docType.label}
                           </span>
                           <div className="flex items-center space-x-2">
@@ -3740,7 +3740,7 @@ Generated on: ${new Date().toLocaleString()}
                                 }
                                 variant="outline"
                                 size="sm"
-                                className="h-6 px-2 text-xs border-blue-500 text-blue-400 hover:bg-blue-500/20"
+                                className="h-6 px-2 text-xs border-blue-500 text-blue-400 hover:bg-blue-500/20 whitespace-nowrap"
                               >
                                 <Image className="h-3 w-3 mr-1" />
                                 Preview
