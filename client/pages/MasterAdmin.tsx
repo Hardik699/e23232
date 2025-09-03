@@ -689,6 +689,7 @@ export default function MasterAdmin() {
             <CardTitle className="text-white">IT Data Tables</CardTitle>
           </CardHeader>
           <CardContent>
+            <div className="assets-hide-id">
             <Tabs defaultValue="systemassets" className="w-full">
               <TabsList className="w-full flex flex-wrap gap-2 overflow-x-auto bg-slate-800/60 backdrop-blur border border-slate-700/60 mb-6 p-1 rounded-xl shadow-sm">
                 <TabsTrigger
@@ -1785,7 +1786,7 @@ export default function MasterAdmin() {
 
               {/* PC/Laptop Configurations Table */}
               <TabsContent value="pclaptops">
-                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner keep-first-col">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -1844,7 +1845,7 @@ export default function MasterAdmin() {
 
               {/* IT Accounts Table */}
               <TabsContent value="itaccounts">
-                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner keep-first-col">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -2018,7 +2019,7 @@ export default function MasterAdmin() {
 
               {/* Pending IT Notifications Table */}
               <TabsContent value="notifications">
-                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner">
+                <div className="rounded-xl border border-glass-border bg-slate-900/40 backdrop-blur supports-[backdrop-filter]:bg-slate-900/30 shadow-inner keep-first-col">
                   <Table>
                     <TableHeader>
                       <TableRow>
@@ -2067,6 +2068,7 @@ export default function MasterAdmin() {
                 </div>
               </TabsContent>
             </Tabs>
+            </div>
           </CardContent>
         </Card>
 
