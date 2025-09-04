@@ -1,4 +1,3 @@
-import type { RequestHandler } from "express";
 import { google } from "googleapis";
 import type { RequestHandler } from "express";
 import {
@@ -22,7 +21,7 @@ async function getSheetsClient() {
     credentials: creds,
     scopes: SCOPES,
   });
-  const authClient = await auth.getClient();
+  const authClient = (await auth.getClient()) as any;
   return google.sheets({ version: "v4", auth: authClient });
 }
 
