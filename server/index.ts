@@ -42,6 +42,8 @@ export function createServer() {
   // Google Sheets integration (admin only recommended on client)
   app.post("/api/google-sheets/sync-master-data", syncMasterDataToGoogleSheets);
   app.get("/api/google-sheets/info", getSpreadsheetInfo);
+  app.get("/api/google-sheets/config", getSheetsRuntimeConfig);
+  app.post("/api/google-sheets/config", updateSheetsRuntimeConfig);
 
   // HR Google Sheets (separate spreadsheet)
   app.post("/api/google-sheets/sync-hr", syncHRDataToGoogleSheets);
