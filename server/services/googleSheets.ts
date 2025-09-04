@@ -113,11 +113,11 @@ async function readTable(
 // IT
 export const getSpreadsheetInfo: RequestHandler = async (_req, res) => {
   try {
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    const spreadsheetId = await getItSheetId();
     if (!spreadsheetId)
       return res
         .status(400)
-        .json({ success: false, error: "GOOGLE_SHEET_ID not set" });
+        .json({ success: false, error: "IT spreadsheet ID not set" });
     const sheets = await getSheetsClient();
     const resp = await sheets.spreadsheets.get({ spreadsheetId });
     const title = resp.data.properties?.title || "";
