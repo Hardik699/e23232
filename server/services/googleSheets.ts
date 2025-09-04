@@ -1,5 +1,4 @@
-import { google } from "googleapis";
-import { google } from "googleapis";
+import { google as googleApi } from "googleapis";
 import type { RequestHandler } from "express";
 import {
   getGoogleSheetsConfig,
@@ -18,12 +17,12 @@ async function getSheetsClient() {
   const raw = process.env.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS;
   if (!raw) throw new Error("GOOGLE_SERVICE_ACCOUNT_CREDENTIALS not set");
   const creds = JSON.parse(raw);
-  const auth = new google.auth.GoogleAuth({
+  const auth = new googleApi.auth.GoogleAuth({
     credentials: creds,
     scopes: SCOPES,
   });
   const authClient = (await auth.getClient()) as any;
-  return google.sheets({ version: "v4", auth: authClient });
+  return googleApi.sheets({ version: "v4", auth: authClient });
 }
 
 async function getItSheetId(): Promise<string | undefined> {
