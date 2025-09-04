@@ -1,5 +1,12 @@
 import type { RequestHandler } from "express";
 import { google } from "googleapis";
+import type { RequestHandler } from "express";
+import {
+  getGoogleSheetsConfig,
+  setGoogleSheetsConfig,
+  extractSpreadsheetId,
+  getServiceAccountEmail,
+} from "../data/config";
 
 const SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]; // read/write
 
@@ -17,6 +24,16 @@ async function getSheetsClient() {
   });
   const authClient = await auth.getClient();
   return google.sheets({ version: "v4", auth: authClient });
+}
+
+async function getItSheetId(): Promise<string | undefined> {
+  const cfg = await getGoogleSheetsConfig();
+  return cfg.itSpreadsheetId || process.env.GOOGLE_SHEET_ID || undefined;
+}
+
+async function getHrSheetId(): Promise<string | undefined> {
+  const cfg = await getGoogleSheetsConfig();
+  return cfg.hrSpreadsheetId || process.env.GOOGLE_SHEET_ID_HR || undefined;
 }
 
 async function ensureSheetExists(
