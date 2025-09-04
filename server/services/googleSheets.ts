@@ -399,3 +399,54 @@ export const loadHRFromGoogleSheets: RequestHandler = async (_req, res) => {
       .json({ success: false, error: e?.message || "Load HR failed" });
   }
 };
+
+export const getSheetsRuntimeConfig: RequestHandler = async (_req, res) => {
+  try {
+    const cfg = await getGoogleSheetsConfig();
+    const itId = cfg.itSpreadsheetId || process.env.GOOGLE_SHEET_ID || null;
+    const hrId = cfg.hrSpreadsheetId || process.env.GOOGLE_SHEET_ID_HR || null;
+    const email = getServiceAccountEmail();
+    res.json({
+      success: true,
+      it: itId ? { id: itId, url: getSpreadsheetUrl(itId) } : null,
+      hr: hrId ? { id: hrId, url: getSpreadsheetUrl(hrId) } : null,
+      serviceAccountEmail: email,
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, error: e?.message || "Failed" });
+  }
+};
+
+export const updateSheetsRuntimeConfig: RequestHandler = async (req, res) => {
+  try {
+    const { itSpreadsheet, hrSpreadsheet } = req.body as {
+      itSpreadsheet?: string;
+      hrSpreadsheet?: string;
+    };
+
+    const update: { itSpreadsheetId?: string; hrSpreadsheetId?: string } = {};
+    if (itSpreadsheet) {
+      const id = extractSpreadsheetId(itSpreadsheet);
+      update.itSpreadsheetId = id;
+      process.env.GOOGLE_SHEET_ID = id;
+    }
+    if (hrSpreadsheet) {
+      const id = extractSpreadsheetId(hrSpreadsheet);
+      update.hrSpreadsheetId = id;
+      process.env.GOOGLE_SHEET_ID_HR = id;
+    }
+
+    await setGoogleSheetsConfig(update);
+
+    const itId = await getItSheetId();
+    const hrId = await getHrSheetId();
+
+    res.json({
+      success: true,
+      it: itId ? { id: itId, url: getSpreadsheetUrl(itId) } : null,
+      hr: hrId ? { id: hrId, url: getSpreadsheetUrl(hrId) } : null,
+    });
+  } catch (e: any) {
+    res.status(500).json({ success: false, error: e?.message || "Update failed" });
+  }
+};
