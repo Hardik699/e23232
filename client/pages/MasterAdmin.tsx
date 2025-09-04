@@ -262,6 +262,17 @@ export default function MasterAdmin() {
         }
       })
       .catch(() => setHrConfigured(false));
+
+    fetch("/api/google-sheets/config")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.success) {
+          if (d.it?.id) setGsItInput(d.it.id);
+          if (d.hr?.id) setGsHrInput(d.hr.id);
+          setServiceAccountEmail(d.serviceAccountEmail || null);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   const loadAllData = () => {
