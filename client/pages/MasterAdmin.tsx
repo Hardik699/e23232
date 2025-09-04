@@ -100,6 +100,7 @@ interface SystemAsset {
   storageCapacity?: string;
   vonageNumber?: string;
   vonageExtCode?: string;
+  vonagePassword?: string;
   createdAt: string;
 }
 
