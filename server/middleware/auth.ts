@@ -1,10 +1,13 @@
 import { RequestHandler } from "express";
 import type { UserRole } from "@shared/api";
+import type { RequestHandler } from "express";
 
-declare module "express-serve-static-core" {
-  interface Request {
-    userRole?: UserRole;
-    userId?: string;
+declare global {
+  namespace Express {
+    interface Request {
+      userRole?: UserRole;
+      userId?: string;
+    }
   }
 }
 
