@@ -146,11 +146,11 @@ export const syncMasterDataToGoogleSheets: RequestHandler = async (
   res,
 ) => {
   try {
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID;
+    const spreadsheetId = await getItSheetId();
     if (!spreadsheetId)
       return res
         .status(400)
-        .json({ success: false, error: "GOOGLE_SHEET_ID not set" });
+        .json({ success: false, error: "IT spreadsheet ID not set" });
     const { masterData } = req.body as { masterData: any };
     if (!masterData)
       return res
