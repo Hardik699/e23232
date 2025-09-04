@@ -198,6 +198,7 @@ export default function SystemInfoDetail() {
       processorModel: "",
       storageType: "",
       storageCapacity: "",
+      quantity: "1",
     });
     setShowForm(true);
   };

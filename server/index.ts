@@ -10,6 +10,10 @@ import {
   syncMasterDataToGoogleSheets,
   getHRSpreadsheetInfo,
   syncHRDataToGoogleSheets,
+  loadITFromGoogleSheets,
+  loadHRFromGoogleSheets,
+  getSheetsRuntimeConfig,
+  updateSheetsRuntimeConfig,
 } from "./services/googleSheets";
 
 export function createServer() {
@@ -38,10 +42,16 @@ export function createServer() {
   // Google Sheets integration (admin only recommended on client)
   app.post("/api/google-sheets/sync-master-data", syncMasterDataToGoogleSheets);
   app.get("/api/google-sheets/info", getSpreadsheetInfo);
+  app.get("/api/google-sheets/config", getSheetsRuntimeConfig);
+  app.post("/api/google-sheets/config", updateSheetsRuntimeConfig);
 
   // HR Google Sheets (separate spreadsheet)
   app.post("/api/google-sheets/sync-hr", syncHRDataToGoogleSheets);
   app.get("/api/google-sheets/info-hr", getHRSpreadsheetInfo);
+
+  // Load data from Google Sheets
+  app.get("/api/google-sheets/load-it", loadITFromGoogleSheets);
+  app.get("/api/google-sheets/load-hr", loadHRFromGoogleSheets);
 
   return app;
 }
