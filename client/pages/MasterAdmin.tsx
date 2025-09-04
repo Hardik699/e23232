@@ -234,6 +234,11 @@ export default function MasterAdmin() {
   const [dbPassword, setDbPassword] = useState("");
   const [hasSecureBackup, setHasSecureBackup] = useState(false);
 
+  const [gsItInput, setGsItInput] = useState("");
+  const [gsHrInput, setGsHrInput] = useState("");
+  const [serviceAccountEmail, setServiceAccountEmail] = useState<string | null>(null);
+  const [savingGs, setSavingGs] = useState(false);
+
   useEffect(() => {
     loadAllData();
     setHasSecureBackup(!!localStorage.getItem("secureDB"));
