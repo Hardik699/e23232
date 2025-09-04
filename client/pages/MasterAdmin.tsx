@@ -2088,6 +2088,136 @@ export default function MasterAdmin() {
           </CardContent>
         </Card>
 
+        {/* Database Settings (Google Sheets) */}
+        <Card className="bg-slate-900/50 border-slate-700">
+          <CardHeader>
+            <CardTitle className="text-white flex items-center gap-2">
+              <Database className="h-5 w-5" />
+              Database Settings (Google Sheets)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="text-slate-300 text-sm">IT Sheet URL or ID</label>
+                <Input
+                  value={gsItInput}
+                  onChange={(e) => setGsItInput(e.target.value)}
+                  placeholder="https://docs.google.com/spreadsheets/d/.. or sheet ID"
+                  className="bg-slate-800/50 border-slate-700 text-white"
+                />
+                {spreadsheetInfo?.url && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="border-slate-600 text-slate-300"
+                    onClick={() => window.open(spreadsheetInfo.url!, "_blank")}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-1" /> Open IT Sheet
+                  </Button>
+                )}
+              </div>
+              <div className="space-y-2">
+                <label className="text-slate-300 text-sm">HR Sheet URL or ID</label>
+                <Input
+                  value={gsHrInput}
+                  onChange={(e) => setGsHrInput(e.target.value)}
+                  placeholder="https://docs.google.com/spreadsheets/d/.. or sheet ID"
+                  className="bg-slate-800/50 border-slate-700 text-white"
+                />
+                {hrInfo?.url && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="border-slate-600 text-slate-300"
+                    onClick={() => window.open(hrInfo.url!, "_blank")}
+                  >
+                    <ExternalLink className="h-4 w-4 mr-1" /> Open HR Sheet
+                  </Button>
+                )}
+              </div>
+            </div>
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
+              <div>
+                <div className="text-slate-400 text-sm mb-1">Service Account Email (share your sheets with this):</div>
+                <div className="text-white text-sm font-mono break-all">
+                  {serviceAccountEmail || "Not configured"}
+                </div>
+              </div>
+              <div className="flex gap-2 md:justify-end">
+                <Button
+                  onClick={async () => {
+                    try {
+                      setSavingGs(true);
+                      const resp = await fetch("/api/google-sheets/config", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          itSpreadsheet: gsItInput || undefined,
+                          hrSpreadsheet: gsHrInput || undefined,
+                        }),
+                      });
+                      const d = await resp.json();
+                      if (!d?.success) {
+                        alert(d?.error || "Failed to update");
+                        return;
+                      }
+                      // Refresh infos
+                      Promise.all([
+                        fetch("/api/google-sheets/info").then((r) => r.json()),
+                        fetch("/api/google-sheets/info-hr").then((r) => r.json()),
+                        fetch("/api/google-sheets/config").then((r) => r.json()),
+                      ])
+                        .then(([it, hr, cfg]) => {
+                          if (it?.success) {
+                            setIsGoogleSheetsConfigured(true);
+                            setSpreadsheetInfo({ title: it.title, url: it.url });
+                          }
+                          if (hr?.success) {
+                            setHrConfigured(true);
+                            setHrInfo({ title: hr.title, url: hr.url });
+                          }
+                          if (cfg?.success) {
+                            if (cfg.it?.id) setGsItInput(cfg.it.id);
+                            if (cfg.hr?.id) setGsHrInput(cfg.hr.id);
+                            setServiceAccountEmail(cfg.serviceAccountEmail || null);
+                          }
+                          alert("Google Sheets settings updated");
+                        })
+                        .catch(() => alert("Updated. Could not refresh info."));
+                    } finally {
+                      setSavingGs(false);
+                    }
+                  }}
+                  className="bg-emerald-600 hover:bg-emerald-700"
+                  disabled={savingGs}
+                >
+                  {savingGs ? "Saving..." : "Save Settings"}
+                </Button>
+                <Button
+                  onClick={() => {
+                    fetch("/api/google-sheets/config")
+                      .then((r) => r.json())
+                      .then((d) => {
+                        if (d?.success) {
+                          if (d.it?.id) setGsItInput(d.it.id);
+                          if (d.hr?.id) setGsHrInput(d.hr.id);
+                          setServiceAccountEmail(d.serviceAccountEmail || null);
+                          alert("Fetched current settings");
+                        }
+                      })
+                      .catch(() => alert("Failed to fetch settings"));
+                  }}
+                  variant="outline"
+                  className="border-slate-600 text-slate-300"
+                >
+                  Refresh
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Authentication Info */}
         <Card className="bg-slate-900/50 border-slate-700">
           <CardHeader>
