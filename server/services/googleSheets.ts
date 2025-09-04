@@ -238,11 +238,11 @@ export const syncMasterDataToGoogleSheets: RequestHandler = async (
 // HR
 export const getHRSpreadsheetInfo: RequestHandler = async (_req, res) => {
   try {
-    const spreadsheetId = process.env.GOOGLE_SHEET_ID_HR;
+    const spreadsheetId = await getHrSheetId();
     if (!spreadsheetId)
       return res
         .status(400)
-        .json({ success: false, error: "GOOGLE_SHEET_ID_HR not set" });
+        .json({ success: false, error: "HR spreadsheet ID not set" });
     const sheets = await getSheetsClient();
     const resp = await sheets.spreadsheets.get({ spreadsheetId });
     const title = resp.data.properties?.title || "";
