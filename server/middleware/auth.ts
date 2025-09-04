@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import type { UserRole } from "@shared/api";
-import type { RequestHandler } from "express";
 
 declare global {
   namespace Express {
@@ -11,7 +10,7 @@ declare global {
   }
 }
 
-export const attachIdentity: RequestHandler = (req, _res, next) => {
+export const attachIdentity: import("express").RequestHandler = (req, _res, next) => {
   const role = (req.header("x-role") || "user").toLowerCase();
   const userId = req.header("x-user-id") || "anonymous";
   req.userRole = role === "admin" ? "admin" : "user";
@@ -19,7 +18,7 @@ export const attachIdentity: RequestHandler = (req, _res, next) => {
   next();
 };
 
-export const requireAdmin: RequestHandler = (req, res, next) => {
+export const requireAdmin: import("express").RequestHandler = (req, res, next) => {
   if (req.userRole !== "admin") {
     return res.status(403).json({ error: "Admin privileges required" });
   }
