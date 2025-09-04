@@ -336,6 +336,25 @@ export default function MasterAdmin() {
     }
   };
 
+  const exportAllData = () => {
+    try {
+      const blob = new Blob([JSON.stringify(masterData, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `master-data-${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("JSON export error:", error);
+      alert("Error exporting JSON. Please try again.");
+    }
+  };
+
   const exportExcel = () => {
     try {
       const wb = XLSX.utils.book_new();
