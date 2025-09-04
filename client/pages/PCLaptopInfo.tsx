@@ -359,10 +359,6 @@ export default function PCLaptopInfo() {
         form.ramId && form.ramId !== "none" ? form.ramId.trim() : undefined,
       ramId2:
         form.ramId2 && form.ramId2 !== "none" ? form.ramId2.trim() : undefined,
-      storageId:
-        (form as any).storageId && (form as any).storageId !== "none"
-          ? (form as any).storageId.trim()
-          : undefined,
     };
 
     let next: Asset[];
