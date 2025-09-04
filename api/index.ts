@@ -1,4 +1,7 @@
-import serverless from "serverless-http";
 import { createServer } from "../server";
 
-export default serverless(createServer());
+const app = createServer();
+
+export default function handler(req: any, res: any) {
+  return app(req, res);
+}
