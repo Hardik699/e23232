@@ -85,11 +85,7 @@ async function writeTable(
   });
 }
 
-async function readTable(
-  sheets: any,
-  spreadsheetId: string,
-  title: string,
-) {
+async function readTable(sheets: any, spreadsheetId: string, title: string) {
   const resp = await sheets.spreadsheets.values.get({
     spreadsheetId,
     range: `${title}!A:ZZ`,
@@ -132,12 +128,10 @@ export const getSpreadsheetInfo: RequestHandler = async (_req, res) => {
       sheets: sheetTitles,
     });
   } catch (e: any) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: e?.message || "Failed to access spreadsheet",
-      });
+    res.status(500).json({
+      success: false,
+      error: e?.message || "Failed to access spreadsheet",
+    });
   }
 };
 
@@ -257,12 +251,10 @@ export const getHRSpreadsheetInfo: RequestHandler = async (_req, res) => {
       sheets: sheetTitles,
     });
   } catch (e: any) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        error: e?.message || "Failed to access spreadsheet",
-      });
+    res.status(500).json({
+      success: false,
+      error: e?.message || "Failed to access spreadsheet",
+    });
   }
 };
 
@@ -374,14 +366,19 @@ export const loadHRFromGoogleSheets: RequestHandler = async (_req, res) => {
         .json({ success: false, error: "HR spreadsheet ID not set" });
 
     const sheets = await getSheetsClient();
-    const [employees, departments, leaveRequests, attendanceRecords, salaryRecords] =
-      await Promise.all([
-        readTable(sheets, spreadsheetId, "Employees"),
-        readTable(sheets, spreadsheetId, "Departments"),
-        readTable(sheets, spreadsheetId, "Leave_Requests"),
-        readTable(sheets, spreadsheetId, "Attendance_Records"),
-        readTable(sheets, spreadsheetId, "Salary_Records"),
-      ]);
+    const [
+      employees,
+      departments,
+      leaveRequests,
+      attendanceRecords,
+      salaryRecords,
+    ] = await Promise.all([
+      readTable(sheets, spreadsheetId, "Employees"),
+      readTable(sheets, spreadsheetId, "Departments"),
+      readTable(sheets, spreadsheetId, "Leave_Requests"),
+      readTable(sheets, spreadsheetId, "Attendance_Records"),
+      readTable(sheets, spreadsheetId, "Salary_Records"),
+    ]);
 
     res.json({
       success: true,
@@ -447,6 +444,8 @@ export const updateSheetsRuntimeConfig: RequestHandler = async (req, res) => {
       hr: hrId ? { id: hrId, url: getSpreadsheetUrl(hrId) } : null,
     });
   } catch (e: any) {
-    res.status(500).json({ success: false, error: e?.message || "Update failed" });
+    res
+      .status(500)
+      .json({ success: false, error: e?.message || "Update failed" });
   }
 };
